@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { scrapeWebsite, generateInsight, generatePersonalizedMessage } from '@/lib/scraper';
-import { supabase } from '@/lib/supabase';
-import { AuditResult } from '@/types';
 
 export async function POST(req: NextRequest) {
   try {
@@ -41,53 +39,18 @@ export async function POST(req: NextRequest) {
     const insight = generateInsight(issues);
     const message = generatePersonalizedMessage(issues, insight);
 
-    // Prepare SEO issues as array
-    const seoIssues = [];
-    if (!issues.title || issues.title === 'Missing Title Tag') seoIssues.push('Missing Title Tag');
-    if (!issues.metaDescription || issues.metaDescription === 'Missing Meta Description') seoIssues.push('Missing Meta Description');
-    if (!issues.hasH1) seoIssues.push('No H1 Heading');
-    if (!issues.hasImages) seoIssues.push('No Images Found');
-    if (!issues.hasSocialLinks) seoIssues.push('No Social Media Links');
-
-    // Save to Supabase
-    const { data, error } = await supabase
-      .from('leads')
-      .insert([
-        {
-          url: validUrl,
-          website_title: issues.title,
-          meta_description: issues.metaDescription,
-          phone_numbers: issues.phoneNumbers,
-          seo_issues: seoIssues,
-          insight: insight,
-          personalized_message: message,
-          word_count: issues.wordCount,
-          has_h1: issues.hasH1,
-          has_images: issues.hasImages,
-          has_social_links: issues.hasSocialLinks,
-          status: 'new'
-        }
-      ])
-      .select();
-
-    if (error) {
-      console.error('Supabase error:', error);
-      // Don't fail the request if save fails, just log it
-    }
-
     // Prepare the response
-    const result: AuditResult = {
+    const result = {
       success: true,
       url: validUrl,
       issues,
       insight,
-      message,
-      savedToDatabase: !!data
+      message
     };
 
     return NextResponse.json(result);
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Audit API error:', error);
     
     // Handle specific errors
@@ -113,7 +76,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// Optional: Add a GET endpoint to check if the API is working
+// GET endpoint to check if API is working
 export async function GET() {
   return NextResponse.json({
     success: true,
