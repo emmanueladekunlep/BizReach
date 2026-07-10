@@ -44,7 +44,6 @@ export default function Home() {
     }
   };
 
-  // Generate detailed SEO checklist with explanations
   const generateChecklist = (issues: any, url: string) => {
     const websiteName = url.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
     
@@ -154,7 +153,6 @@ export default function Home() {
     ];
   };
 
-  // Generate personalized business message
   const generateBusinessMessage = (issues: any, url: string) => {
     const websiteName = url.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
     const missingItems = [];
@@ -268,7 +266,6 @@ export default function Home() {
         {/* Results Section */}
         {result && (
           <div className="space-y-6 animate-fadeIn">
-            {/* Main Results */}
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100">
               <div className="flex items-start justify-between mb-6">
                 <div>
@@ -280,13 +277,11 @@ export default function Home() {
                 </span>
               </div>
               
-              {/* Main Issue */}
               <div className="border-l-4 border-yellow-400 bg-yellow-50 p-4 rounded-r-lg mb-6">
                 <h3 className="font-semibold text-yellow-800">📋 Main Issue Detected</h3>
                 <p className="text-yellow-700">{result.insight}</p>
               </div>
 
-              {/* SEO Checklist with Detailed Explanations */}
               <div className="mb-6">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">🔍 SEO Checklist & Analysis</h3>
                 <div className="space-y-4">
@@ -309,7 +304,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Phone Numbers Found */}
               {result.issues.phoneNumbers.length > 0 && (
                 <div className="border-l-4 border-green-400 bg-green-50 p-4 rounded-r-lg mb-6">
                   <h3 className="font-semibold text-green-800">📱 Phone Numbers Found</h3>
@@ -326,7 +320,6 @@ export default function Home() {
                 </div>
               )}
 
-              {/* Personalized Business Message */}
               <div className="border-l-4 border-purple-400 bg-purple-50 p-4 rounded-r-lg mb-6">
                 <h3 className="font-semibold text-purple-800">📧 Message to the Business Owner</h3>
                 <div className="text-purple-700 mt-2 whitespace-pre-line font-sans text-sm">
@@ -335,7 +328,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Contact Section - Lead Generation */}
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-xl p-6 md:p-8 border border-blue-400 text-white">
               <div className="text-center">
                 <h3 className="text-2xl font-bold mb-2">🚀 Get Your Website Fixed Today!</h3>
